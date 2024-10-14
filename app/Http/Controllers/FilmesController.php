@@ -4,18 +4,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Filme;
 
 class FilmesController extends Controller
 {
-    public function index(Request $request) // Por convenção, o nome da action do Controller para o verbo GET é index
+    public function index() // Por convenção, o nome da action do Controller para o verbo GET é index
     {
         // return $request->informacao(); Com esse comando é possivel extrair uma série de informações, como método, input, etc
         // return redirect('url'); 
-        $filmes = [
-            'Carrie a Estranha', 
-            'A Vida é Bela',
-            'Robôs'
-        ];
+        $filmes = Filme::query()->orderBy("name")->get();
 
         // $html = '<ul>';
         // foreach ($filmes as $filme) {
@@ -31,7 +29,19 @@ class FilmesController extends Controller
         return view('filmes.index')->with('filmes',$filmes);
     }
 
-    public function create(){
+    public function create()
+    {
         return view('filmes.create');
+    }
+
+    public function store(Request $request)
+    {
+        $nomeFilme = $request->input('novo');
+        $filme = new Filme();
+        $filme->name = $nomeFilme;
+        $filme->save();
+        // DB::insert('INSERT INTO filmes (name) VALUES (?)', [$nomeFilme]);
+        return redirect('/filmes');
+        
     }
 }
