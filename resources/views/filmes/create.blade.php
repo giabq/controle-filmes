@@ -1,5 +1,5 @@
 <x-layout title="Adicionar filme">
-    <form action="/filmes/salvar" method="post">
+    <form action="{{route('filmes.store')}}" method="post">
         @csrf <!-- diretiva do blade para evitar ataques -->
         <div class="mb-3">
             <label for="novo" class="form-label">Nome:</label>

@@ -36,12 +36,13 @@ class FilmesController extends Controller
 
     public function store(Request $request)
     {
-        $nomeFilme = $request->input('novo');
-        $filme = new Filme();
-        $filme->name = $nomeFilme;
-        $filme->save();
-        // DB::insert('INSERT INTO filmes (name) VALUES (?)', [$nomeFilme]);
-        return redirect('/filmes');
-        
+        Filme::create($request->all());
+        return to_route('filmes.index');
+    }
+
+    public function destroy(Request $request)
+    {
+        Filme::destroy($request->filme);
+        return to_route('filmes.index');
     }
 }
