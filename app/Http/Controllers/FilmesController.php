@@ -6,14 +6,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Filme;
+use Illuminate\Support\Facades\Session;
+
+
 
 class FilmesController extends Controller
 {
-    public function index() // Por convenção, o nome da action do Controller para o verbo GET é index
+    public function index(Request $request) // Por convenção, o nome da action do Controller para o verbo GET é index
     {
         // return $request->informacao(); Com esse comando é possivel extrair uma série de informações, como método, input, etc
         // return redirect('url'); 
         $filmes = Filme::query()->orderBy("name")->get();
+        $mensagemSucesso = $request->session()->get('mensagem.sucesso');
 
         // $html = '<ul>';
         // foreach ($filmes as $filme) {
@@ -26,7 +30,7 @@ class FilmesController extends Controller
         // return $html;
         // // O Laravel pega o retorno e ANALISA a MELHOR forma de devolver a resposta
 
-        return view('filmes.index')->with('filmes',$filmes);
+        return view('filmes.index')->with('filmes', $filmes)->with('mensagemSucesso', $mensagemSucesso);
     }
 
     public function create()
@@ -36,13 +40,13 @@ class FilmesController extends Controller
 
     public function store(Request $request)
     {
-        Filme::create($request->all());
-        return to_route('filmes.index');
+        $filme =Filme::create($request->all());
+        return to_route('filmes.index')->with('mensagem.sucesso', "Filme '{$filme->name}' adicionado com sucesso!");
     }
 
-    public function destroy(Request $request)
+    public function destroy(Filme $filme)
     {
-        Filme::destroy($request->filme);
-        return to_route('filmes.index');
+        $filme->delete();
+        return to_route('filmes.index')->with('mensagem.sucesso', "Filme '{$filme->name}' removido com sucesso!");
     }
 }

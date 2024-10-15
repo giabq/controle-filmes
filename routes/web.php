@@ -17,6 +17,6 @@ Route::get('/', function () {
 //     Route::post('/filmes/salvar', 'store')->name('filmes.store');
 // });
 
-Route::resource('filmes', FilmesController::class)->only(['index', 'create', 'store']);
+Route::resource('filmes', FilmesController::class);
+Route::delete('/filmes/{filme}', [FilmesController::class, 'destroy'])->name('filmes.destroy');
 
-Route::post('/filmes/destroy/{filme}', [FilmesController::class, 'destroy'])->name('filmes.destroy');

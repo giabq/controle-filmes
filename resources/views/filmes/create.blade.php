@@ -2,8 +2,8 @@
     <form action="{{route('filmes.store')}}" method="post">
         @csrf <!-- diretiva do blade para evitar ataques -->
         <div class="mb-3">
-            <label for="novo" class="form-label">Nome:</label>
-            <input type="text" name="novo" id="novo" class="form-control">
+            <label for="name" class="form-label">Nome:</label>
+            <input type="text" name="name" id="name" class="form-control">
         </div>
         <button type="submit" class="btn btn-primary">Adicionar</button>
     </form>
