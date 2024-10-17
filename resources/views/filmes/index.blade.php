@@ -11,10 +11,10 @@
     <ul class="list-group">
         @foreach($filmes as $filme)
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            {{$filme->name}}
+            <a href="{{ route('personagens.index', $filme->id) }}" >{{ $filme->name }} </a>
 
             <span class="d-flex">
-                <a href="{{ route('filmes.edit', $filme) }}" class="button btn btn-primary btn-sm">
+                <a href="{{ route('filmes.edit', $filme->id) }}" class="button btn btn-primary btn-sm">
                     E
                 </a>
                 <form action="{{ route('filmes.destroy', $filme) }}" method="post" class="ms-2">

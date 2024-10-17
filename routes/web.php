@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\FilmesController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PersonagensController;
+
 
 Route::get('/', function () {
     return redirect('/filmes');
@@ -17,6 +19,6 @@ Route::get('/', function () {
 //     Route::post('/filmes/salvar', 'store')->name('filmes.store');
 // });
 
-Route::resource('filmes', FilmesController::class);
-Route::delete('/filmes/{filme}', [FilmesController::class, 'destroy'])->name('filmes.destroy');
-
+Route::resource('filmes', FilmesController::class)->except(['show']);
+Route::get('/filmes/{filme}/personagens', [PersonagensController::class, 'index'])->name('personagens.index');
+Route::post('filmes/{filme}/personagens', [PersonagensController::class, 'store'])->name('personagens.store');
